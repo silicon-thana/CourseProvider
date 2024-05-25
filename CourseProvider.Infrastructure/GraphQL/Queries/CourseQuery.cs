@@ -7,7 +7,7 @@ public class CourseQuery(ICourseService courseService)
 {
     private readonly ICourseService _courseService = courseService;
 
-    [GraphQLName("getAllCourses")]
+    [GraphQLName("getCourses")]
     public async Task<IEnumerable<Course>> GetCoursesAsync()
     {
         return await _courseService.GetCourseAsync();
