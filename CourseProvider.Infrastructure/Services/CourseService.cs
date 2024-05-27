@@ -43,7 +43,14 @@ public class CourseService(IDbContextFactory<DataContext> contextFactory) : ICou
         await using var context = _contextFactory.CreateDbContext();
         var courseEntity = await context.Courses.FirstOrDefaultAsync(c => c.Id == id);
 
-        return courseEntity == null ? null! : CourseFactory.Create(courseEntity);
+        if (courseEntity == null)
+        {
+            Console.WriteLine($"Course with Id {id} not found");
+            return null!;
+        }
+
+        Console.WriteLine($"Retrieved Course: {courseEntity.Id}, {courseEntity.Title}");
+        return CourseFactory.Create(courseEntity);
     }
     public async Task<Course> UpdateCourseAsync(CourseUpdateRequest request)
     {
